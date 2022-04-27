@@ -8,6 +8,7 @@
 import boto3
 import json
 import requests
+import time
 from requests_aws4auth import AWS4Auth
 from botocore.exceptions import ClientError
 
@@ -327,6 +328,8 @@ def verify(email):
     
     emaildomain = client.list_verified_email_addresses()['VerifiedEmailAddresses']
     
+    # wait for verification
+    time.sleep(60)
     if email not in emaildomain:
         response = client.verify_email_address(
             EmailAddress=email
